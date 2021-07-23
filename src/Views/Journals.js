@@ -1,6 +1,5 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, {useContext} from 'react'
 import Page from '../Components/Page'
-import {SelectedJournalContext} from '../Contexts/SelectedJournalProvider'
 import JournalService from '../Services/JournalService'
 import {
 	Card,
@@ -10,26 +9,18 @@ import {
 	Typography,
 } from '@material-ui/core'
 import Confirm from '../Components/Confirm'
+import {JournalListContext} from '../Contexts/JournalListProvider'
+import EditJournalDialog from '../Components/EditJournalDialog'
 
 const journalService = new JournalService()
 
 export default function Journals() {
 
-	const {selectedJournal} = useContext(SelectedJournalContext)
-
-	const [journals, setJournals] = useState([])
-
-	async function fetchJournals(journalId) {
-		setJournals(await journalService.index(journalId))
-	}
-
-	useEffect(() => {
-		fetchJournals(selectedJournal)
-	}, [selectedJournal])
+	const {journalList, fetchJournalList} = useContext(JournalListContext)
 
 	async function destroyJournal(id) {
 		await journalService.destroy(id)
-		fetchJournals(selectedJournal)
+		fetchJournalList()
 	}
 
 	return (
@@ -40,7 +31,7 @@ export default function Journals() {
 						Journals
 					</Typography>
 				</Grid>
-				{journals.map((journal, index) => {
+				{journalList.map((journal, index) => {
 					return (
 						<Grid item xs={12} md={6} key={index}>
 							<Card className={'fullHeight'}>
@@ -56,6 +47,7 @@ export default function Journals() {
 										onConfirm={() => destroyJournal(
 											journal.id)}
 									/>
+									<EditJournalDialog journalId={journal.id} />
 								</CardActions>
 							</Card>
 						</Grid>
