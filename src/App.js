@@ -39,7 +39,7 @@ function App() {
 				<CssBaseline/>
 				<JournalListProvider>
 					<SelectedJournalProvider>
-						<BrowserRouter>
+						<BrowserRouter basename={process.env.PUBLIC_URL}>
 							<NavDrawer open={nav}
 									   onClose={() => {toggleNav(false)}}/>
 							<TopBar onMenuClick={() => {toggleNav(true)}}/>
