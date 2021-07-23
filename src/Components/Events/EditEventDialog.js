@@ -1,0 +1,94 @@
+import React, {useEffect, useState} from 'react'
+import {
+	Dialog,
+	DialogContent,
+	Grid,
+	IconButton,
+	makeStyles,
+	TextField,
+} from '@material-ui/core'
+import EventService from '../../Services/EventService'
+import {Info, Save} from '@material-ui/icons'
+import Editor from '../Editor'
+
+const eventService = new EventService()
+
+const useStyles = makeStyles(theme => {
+	return {
+		dialog: {
+			width: '800px',
+			maxWidth: '100%',
+		},
+		textField: {
+			width: '100%',
+		},
+	}
+})
+
+export default function EditEventDialog(props) {
+
+	const classes = useStyles()
+
+	const [content, setContent] = useState('')
+	const [name, setName] = useState('')
+	const [open, setOpen] = useState(false)
+
+	useEffect(() => {
+		(async function() {
+			let event = await eventService.show(props.eventId)
+			setContent(event.notes)
+			setName(event.name)
+		})()
+	}, [props.eventId])
+
+	function saveAndClose() {
+		eventService.update(props.eventId, {
+			name: name,
+			notes: content,
+		})
+		props.onClose()
+	}
+
+	/*function cancelAndClose(){
+		setContent(event.notes)
+		setName(event.name)
+		props.onClose()
+	}*/
+
+	return (
+		<div>
+			<IconButton onClick={() => setOpen(true)}>
+				<Info color="primary"/>
+			</IconButton>
+			<Dialog open={open}
+					onClose={
+						() => {
+							setOpen(false)
+							saveAndClose()
+						}}
+			>
+				<DialogContent
+					className={classes.dialog}
+				>
+					<Grid container spacing={1}>
+						<Grid item xs={3} md={1}>
+							<IconButton onClick={saveAndClose}>
+								<Save/>
+							</IconButton>
+						</Grid>
+						<Grid item xs={9} md={8}>
+							<TextField
+								className={classes.textField}
+								value={name}
+								onChange={(e) => setName(e.target.value)}
+
+							/>
+						</Grid>
+					</Grid>
+					<Editor value={content} onChange={setContent}/>
+				</DialogContent>
+			</Dialog>
+		</div>
+	)
+
+}
