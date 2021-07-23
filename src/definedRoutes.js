@@ -74,6 +74,14 @@ const routes = [
 		icon: <Info/>,
 		inNav: true,
 	},
+	{
+		path: '/rpg-notes',
+		text: 'Instructions',
+		exact: true,
+		component: <Instructions/>,
+		icon: <Info/>,
+		inNav: false,
+	},
 ]
 
 export default routes
