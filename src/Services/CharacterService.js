@@ -6,9 +6,7 @@ export default class CharacterService extends Service {
 		if (journal_id && !isNaN(journal_id)) {
 			return this.store.transaction('rw', this.store.characters,
 				async () => {
-					return this.store.characters.where('journal_id').
-						equals(journal_id).
-						sortBy('npc')
+					return this.store.characters.where('journal_id').equals(journal_id).sortBy('npc')
 				})
 		}
 		return this.store.transaction('rw', this.store.characters, async () => {

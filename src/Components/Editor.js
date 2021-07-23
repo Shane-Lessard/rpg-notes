@@ -21,7 +21,7 @@ export default function Editor(props) {
 	return (
 		<ReactQuill
 			className={classes.root}
-			value={props.value}
+			value={props.value || ''}
 			onChange={props.onChange}
 			theme="snow"
 			modules={modules}

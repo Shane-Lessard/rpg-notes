@@ -6,9 +6,7 @@ export default class QuestService extends Service {
 		if (journal_id && !isNaN(journal_id)) {
 			return this.store.transaction('rw', this.store.quests,
 				async () => {
-					return this.store.quests.where('journal_id').
-						equals(journal_id).
-						sortBy('complete')
+					return this.store.quests.where('journal_id').equals(journal_id).sortBy('complete')
 				})
 		}
 		return this.store.transaction('rw', this.store.quests, async () => {

@@ -6,9 +6,7 @@ export default class PlaceService extends Service {
 		if (journal_id && !isNaN(journal_id)) {
 			return this.store.transaction('rw', this.store.places,
 				async () => {
-					return this.store.places.where('journal_id').
-						equals(journal_id).
-						toArray()
+					return this.store.places.where('journal_id').equals(journal_id).toArray()
 				})
 		}
 		return this.store.transaction('rw', this.store.places, async () => {

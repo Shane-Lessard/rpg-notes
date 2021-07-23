@@ -6,9 +6,7 @@ export default class EventService extends Service {
 		if (journal_id && !isNaN(journal_id)) {
 			return this.store.transaction('rw', this.store.events,
 				async () => {
-					return this.store.events.where('journal_id').
-						equals(journal_id).
-						toArray()
+					return this.store.events.where('journal_id').equals(journal_id).toArray()
 				})
 		}
 		return this.store.transaction('rw', this.store.events, async () => {
