@@ -14,7 +14,7 @@ import {AddOutlined} from '@material-ui/icons'
 import AddEventDialog from '../Components/Events/AddEventDialog'
 import EditEventDialog from '../Components/Events/EditEventDialog'
 import Confirm from '../Components/Confirm'
-import JournalSelector from '../Components/JournalSelector'
+import JournalSelectorDialog from '../Components/JournalSelectorDialog'
 
 const eventService = new EventService()
 
@@ -50,60 +50,53 @@ export default function Events() {
 
 	return (
 		<Page>
-			{
-				!selectedJournal ?
-					<div style={{margin: 'auto'}}>
-						Please Select a Journal
-						<JournalSelector/>
-					</div>
-					:
-					<Grid container spacing={3}>
-						<Grid item xs={12}>
-							<Typography variant="h4">
-								<AddEventDialog open={addEventDialog}
-												onClose={() => closeAddEventDialog()}/>
-								<IconButton
-									onClick={() => openAddEventDialog()}>
-									<AddOutlined/>
-								</IconButton>
-								Events
-							</Typography>
+			<JournalSelectorDialog open={!selectedJournal} />
+			<Grid container spacing={3}>
+				<Grid item xs={12}>
+					<Typography variant="h4">
+						<AddEventDialog open={addEventDialog}
+										onClose={() => closeAddEventDialog()}/>
+						<IconButton
+							onClick={() => openAddEventDialog()}>
+							<AddOutlined/>
+						</IconButton>
+						Events
+					</Typography>
+				</Grid>
+				{events.map((event, index) => {
+					return (
+						<Grid item xs={12} md={6} key={index}>
+							<Card className={'fullHeight'}>
+								<CardContent>
+									<Typography variant="h5">
+										{event.name}
+									</Typography>
+									<Typography
+										variant="body2"
+										dangerouslySetInnerHTML={{
+											__html: event.notes?.substring(
+												0, 300),
+										}}
+									/>
+								</CardContent>
+								<div className={'flexGrow'}/>
+								<CardActions>
+									<Confirm
+										message={`Are you sure you want to delete ${event.name}?`}
+										onConfirm={() => destroyEvent(
+											event.id)}
+									/>
+									<EditEventDialog
+										onClose={() => fetchEvents(
+											selectedJournal)}
+										eventId={event.id}
+									/>
+								</CardActions>
+							</Card>
 						</Grid>
-						{events.map((event, index) => {
-							return (
-								<Grid item xs={12} md={6} key={index}>
-									<Card className={'fullHeight'}>
-										<CardContent>
-											<Typography variant="h5">
-												{event.name}
-											</Typography>
-											<Typography
-												variant="body2"
-												dangerouslySetInnerHTML={{
-													__html: event.notes?.substring(
-														0, 300),
-												}}
-											/>
-										</CardContent>
-										<div className={'flexGrow'}/>
-										<CardActions>
-											<Confirm
-												message={`Are you sure you want to delete ${event.name}?`}
-												onConfirm={() => destroyEvent(
-													event.id)}
-											/>
-											<EditEventDialog
-												onClose={() => fetchEvents(
-													selectedJournal)}
-												eventId={event.id}
-											/>
-										</CardActions>
-									</Card>
-								</Grid>
-							)
-						})}
-					</Grid>
-			}
+					)
+				})}
+			</Grid>
 		</Page>
 	)
 }

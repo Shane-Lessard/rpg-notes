@@ -14,7 +14,7 @@ import {AddOutlined} from '@material-ui/icons'
 import AddCharacterDialog from '../Components/Characters/AddCharacterDialog'
 import EditCharacterDialog from '../Components/Characters/EditCharacterDialog'
 import Confirm from '../Components/Confirm'
-import JournalSelector from '../Components/JournalSelector'
+import JournalSelectorDialog from '../Components/JournalSelectorDialog'
 
 const characterService = new CharacterService()
 
@@ -50,63 +50,56 @@ export default function Characters() {
 
 	return (
 		<Page>
-			{
-				!selectedJournal ?
-					<div style={{margin: 'auto'}}>
-						Please Select a Journal
-						<JournalSelector/>
-					</div>
-					:
-					<Grid container spacing={3}>
-						<Grid item xs={12}>
-							<Typography variant="h4">
-								<AddCharacterDialog open={addCharacterDialog}
-													onClose={() => closeAddCharacterDialog()}/>
-								<IconButton
-									onClick={() => openAddCharacterDialog()}>
-									<AddOutlined/>
-								</IconButton>
-								Characters
-							</Typography>
+			<JournalSelectorDialog open={!selectedJournal} />
+			<Grid container spacing={3}>
+				<Grid item xs={12}>
+					<Typography variant="h4">
+						<AddCharacterDialog open={addCharacterDialog}
+											onClose={() => closeAddCharacterDialog()}/>
+						<IconButton
+							onClick={() => openAddCharacterDialog()}>
+							<AddOutlined/>
+						</IconButton>
+						Characters
+					</Typography>
+				</Grid>
+				{characters.map((character, index) => {
+					return (
+						<Grid item xs={12} md={6} key={index}>
+							<Card className={'fullHeight'}>
+								<CardContent>
+									<Typography variant="h5">
+										{character.name}
+									</Typography>
+									<Typography variant="body2">
+										{character.npc ? 'NPC' : 'PC'}
+									</Typography>
+									<Typography
+										variant="body2"
+										dangerouslySetInnerHTML={{
+											__html: character.notes?.substring(
+												0, 300),
+										}}
+									/>
+								</CardContent>
+								<div className={'flexGrow'}/>
+								<CardActions>
+									<Confirm
+										message={`Are you sure you want to delete ${character.name}?`}
+										onConfirm={() => destroyCharacter(
+											character.id)}
+									/>
+									<EditCharacterDialog
+										onClose={() => fetchCharacters(
+											selectedJournal)}
+										characterId={character.id}
+									/>
+								</CardActions>
+							</Card>
 						</Grid>
-						{characters.map((character, index) => {
-							return (
-								<Grid item xs={12} md={6} key={index}>
-									<Card className={'fullHeight'}>
-										<CardContent>
-											<Typography variant="h5">
-												{character.name}
-											</Typography>
-											<Typography variant="body2">
-												{character.npc ? 'NPC' : 'PC'}
-											</Typography>
-											<Typography
-												variant="body2"
-												dangerouslySetInnerHTML={{
-													__html: character.notes?.substring(
-														0, 300),
-												}}
-											/>
-										</CardContent>
-										<div className={'flexGrow'}/>
-										<CardActions>
-											<Confirm
-												message={`Are you sure you want to delete ${character.name}?`}
-												onConfirm={() => destroyCharacter(
-													character.id)}
-											/>
-											<EditCharacterDialog
-												onClose={() => fetchCharacters(
-													selectedJournal)}
-												characterId={character.id}
-											/>
-										</CardActions>
-									</Card>
-								</Grid>
-							)
-						})}
-					</Grid>
-			}
+					)
+				})}
+			</Grid>
 		</Page>
 	)
 }

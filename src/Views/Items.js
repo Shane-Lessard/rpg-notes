@@ -14,7 +14,7 @@ import {AddOutlined} from '@material-ui/icons'
 import AddItemDialog from '../Components/Items/AddItemDialog'
 import EditItemDialog from '../Components/Items/EditItemDialog'
 import Confirm from '../Components/Confirm'
-import JournalSelector from '../Components/JournalSelector'
+import JournalSelectorDialog from '../Components/JournalSelectorDialog'
 
 const itemService = new ItemService()
 
@@ -50,60 +50,53 @@ export default function Items() {
 
 	return (
 		<Page>
-			{
-				!selectedJournal ?
-					<div style={{margin: 'auto'}}>
-						Please Select a Journal
-						<JournalSelector/>
-					</div>
-					:
-					<Grid container spacing={3}>
-						<Grid item xs={12}>
-							<Typography variant="h4">
-								<AddItemDialog open={addItemDialog}
-											   onClose={() => closeAddItemDialog()}/>
-								<IconButton
-									onClick={() => openAddItemDialog()}>
-									<AddOutlined/>
-								</IconButton>
-								Items
-							</Typography>
+		<JournalSelectorDialog open={!selectedJournal} />
+		<Grid container spacing={3}>
+				<Grid item xs={12}>
+					<Typography variant="h4">
+						<AddItemDialog open={addItemDialog}
+									   onClose={() => closeAddItemDialog()}/>
+						<IconButton
+							onClick={() => openAddItemDialog()}>
+							<AddOutlined/>
+						</IconButton>
+						Items
+					</Typography>
+				</Grid>
+				{items.map((item, index) => {
+					return (
+						<Grid item xs={12} md={6} key={index}>
+							<Card className={'fullHeight'}>
+								<CardContent>
+									<Typography variant="h5">
+										{item.name}
+									</Typography>
+									<Typography
+										variant="body2"
+										dangerouslySetInnerHTML={{
+											__html: item.notes?.substring(
+												0, 300),
+										}}
+									/>
+								</CardContent>
+								<div className={'flexGrow'}/>
+								<CardActions>
+									<Confirm
+										message={`Are you sure you want to delete ${item.name}?`}
+										onConfirm={() => destroyItem(
+											item.id)}
+									/>
+									<EditItemDialog
+										onClose={() => fetchItems(
+											selectedJournal)}
+										itemId={item.id}
+									/>
+								</CardActions>
+							</Card>
 						</Grid>
-						{items.map((item, index) => {
-							return (
-								<Grid item xs={12} md={6} key={index}>
-									<Card className={'fullHeight'}>
-										<CardContent>
-											<Typography variant="h5">
-												{item.name}
-											</Typography>
-											<Typography
-												variant="body2"
-												dangerouslySetInnerHTML={{
-													__html: item.notes?.substring(
-														0, 300),
-												}}
-											/>
-										</CardContent>
-										<div className={'flexGrow'}/>
-										<CardActions>
-											<Confirm
-												message={`Are you sure you want to delete ${item.name}?`}
-												onConfirm={() => destroyItem(
-													item.id)}
-											/>
-											<EditItemDialog
-												onClose={() => fetchItems(
-													selectedJournal)}
-												itemId={item.id}
-											/>
-										</CardActions>
-									</Card>
-								</Grid>
-							)
-						})}
-					</Grid>
-			}
+					)
+				})}
+			</Grid>
 		</Page>
 	)
 }

@@ -14,7 +14,7 @@ import {AddOutlined} from '@material-ui/icons'
 import AddPlaceDialog from '../Components/Places/AddPlaceDialog'
 import EditPlaceDialog from '../Components/Places/EditPlaceDialog'
 import Confirm from '../Components/Confirm'
-import JournalSelector from '../Components/JournalSelector'
+import JournalSelectorDialog from '../Components/JournalSelectorDialog'
 
 const placeService = new PlaceService()
 
@@ -50,60 +50,53 @@ export default function Places() {
 
 	return (
 		<Page>
-			{
-				!selectedJournal ?
-					<div style={{margin: 'auto'}}>
-						Please Select a Journal
-						<JournalSelector/>
-					</div>
-					:
-					<Grid container spacing={3}>
-						<Grid item xs={12}>
-							<Typography variant="h4">
-								<AddPlaceDialog open={addPlaceDialog}
-												onClose={() => closeAddPlaceDialog()}/>
-								<IconButton
-									onClick={() => openAddPlaceDialog()}>
-									<AddOutlined/>
-								</IconButton>
-								Places
-							</Typography>
+			<JournalSelectorDialog open={!selectedJournal} />
+			<Grid container spacing={3}>
+				<Grid item xs={12}>
+					<Typography variant="h4">
+						<AddPlaceDialog open={addPlaceDialog}
+										onClose={() => closeAddPlaceDialog()}/>
+						<IconButton
+							onClick={() => openAddPlaceDialog()}>
+							<AddOutlined/>
+						</IconButton>
+						Places
+					</Typography>
+				</Grid>
+				{places.map((place, index) => {
+					return (
+						<Grid item xs={12} md={6} key={index}>
+							<Card className={'fullHeight'}>
+								<CardContent>
+									<Typography variant="h5">
+										{place.name}
+									</Typography>
+									<Typography
+										variant="body2"
+										dangerouslySetInnerHTML={{
+											__html: place.notes?.substring(
+												0, 300),
+										}}
+									/>
+								</CardContent>
+								<div className={'flexGrow'}/>
+								<CardActions>
+									<Confirm
+										message={`Are you sure you want to delete ${place.name}?`}
+										onConfirm={() => destroyPlace(
+											place.id)}
+									/>
+									<EditPlaceDialog
+										onClose={() => fetchPlaces(
+											selectedJournal)}
+										placeId={place.id}
+									/>
+								</CardActions>
+							</Card>
 						</Grid>
-						{places.map((place, index) => {
-							return (
-								<Grid item xs={12} md={6} key={index}>
-									<Card className={'fullHeight'}>
-										<CardContent>
-											<Typography variant="h5">
-												{place.name}
-											</Typography>
-											<Typography
-												variant="body2"
-												dangerouslySetInnerHTML={{
-													__html: place.notes?.substring(
-														0, 300),
-												}}
-											/>
-										</CardContent>
-										<div className={'flexGrow'}/>
-										<CardActions>
-											<Confirm
-												message={`Are you sure you want to delete ${place.name}?`}
-												onConfirm={() => destroyPlace(
-													place.id)}
-											/>
-											<EditPlaceDialog
-												onClose={() => fetchPlaces(
-													selectedJournal)}
-												placeId={place.id}
-											/>
-										</CardActions>
-									</Card>
-								</Grid>
-							)
-						})}
-					</Grid>
-			}
+					)
+				})}
+			</Grid>
 		</Page>
 	)
 }

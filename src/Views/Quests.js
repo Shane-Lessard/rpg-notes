@@ -14,7 +14,7 @@ import {AddOutlined, Done, PriorityHigh} from '@material-ui/icons'
 import AddQuestDialog from '../Components/Quests/AddQuestDialog'
 import EditQuestDialog from '../Components/Quests/EditQuestDialog'
 import Confirm from '../Components/Confirm'
-import JournalSelector from '../Components/JournalSelector'
+import JournalSelectorDialog from '../Components/JournalSelectorDialog'
 
 const questService = new QuestService()
 
@@ -50,72 +50,65 @@ export default function Quests() {
 
 	return (
 		<Page>
-			{
-				!selectedJournal ?
-					<div style={{margin: 'auto'}}>
-						Please Select a Journal
-						<JournalSelector/>
-					</div>
-					:
-					<Grid container spacing={3}>
-						<Grid item xs={12}>
-							<Typography variant="h4">
-								<AddQuestDialog open={addQuestDialog}
-												onClose={() => closeAddQuestDialog()}/>
-								<IconButton
-									onClick={() => openAddQuestDialog()}>
-									<AddOutlined/>
-								</IconButton>
-								Quests
-							</Typography>
+			<JournalSelectorDialog open={!selectedJournal} />
+			<Grid container spacing={3}>
+				<Grid item xs={12}>
+					<Typography variant="h4">
+						<AddQuestDialog open={addQuestDialog}
+										onClose={() => closeAddQuestDialog()}/>
+						<IconButton
+							onClick={() => openAddQuestDialog()}>
+							<AddOutlined/>
+						</IconButton>
+						Quests
+					</Typography>
+				</Grid>
+				{quests.map((quest, index) => {
+					return (
+						<Grid item xs={12} md={6} key={index}>
+							<Card className={'fullHeight'}>
+								<CardContent>
+									<Typography variant="h5"
+												className={'wrapIcon'}>
+										<Grid container direction="row"
+											  alignItems="center">
+											{
+												quest.complete ?
+													<Done
+														color="primary"/>
+													:
+													<PriorityHigh
+														color="secondary"/>
+											}
+											{quest.name}
+										</Grid>
+									</Typography>
+									<Typography
+										variant="body2"
+										dangerouslySetInnerHTML={{
+											__html: quest.notes?.substring(
+												0, 300),
+										}}
+									/>
+								</CardContent>
+								<div className={'flexGrow'}/>
+								<CardActions>
+									<Confirm
+										message={`Are you sure you want to delete ${quest.name}?`}
+										onConfirm={() => destroyQuest(
+											quest.id)}
+									/>
+									<EditQuestDialog
+										onClose={() => fetchQuests(
+											selectedJournal)}
+										questId={quest.id}
+									/>
+								</CardActions>
+							</Card>
 						</Grid>
-						{quests.map((quest, index) => {
-							return (
-								<Grid item xs={12} md={6} key={index}>
-									<Card className={'fullHeight'}>
-										<CardContent>
-											<Typography variant="h5"
-														className={'wrapIcon'}>
-												<Grid container direction="row"
-													  alignItems="center">
-													{
-														quest.complete ?
-															<Done
-																color="primary"/>
-															:
-															<PriorityHigh
-																color="secondary"/>
-													}
-													{quest.name}
-												</Grid>
-											</Typography>
-											<Typography
-												variant="body2"
-												dangerouslySetInnerHTML={{
-													__html: quest.notes?.substring(
-														0, 300),
-												}}
-											/>
-										</CardContent>
-										<div className={'flexGrow'}/>
-										<CardActions>
-											<Confirm
-												message={`Are you sure you want to delete ${quest.name}?`}
-												onConfirm={() => destroyQuest(
-													quest.id)}
-											/>
-											<EditQuestDialog
-												onClose={() => fetchQuests(
-													selectedJournal)}
-												questId={quest.id}
-											/>
-										</CardActions>
-									</Card>
-								</Grid>
-							)
-						})}
-					</Grid>
-			}
+					)
+				})}
+			</Grid>
 		</Page>
 	)
 }
