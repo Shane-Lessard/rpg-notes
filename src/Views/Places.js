@@ -74,8 +74,8 @@ export default function Places() {
 								<Grid item xs={12} md={6} key={index}>
 									<Card className={'fullHeight'}>
 										<CardContent>
-											<Typography variant="h5"
-														className={'wrapIcon'}>
+											<Typography variant="h5">
+												{place.name}
 											</Typography>
 											<Typography
 												variant="body2"
