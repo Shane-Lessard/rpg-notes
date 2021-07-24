@@ -80,12 +80,12 @@ export default function RelationshipList(props){
 										</Grid>
 										<Grid item>
 											<ListItemIcon>
-												<Confirm onConfirm={() => {deleteRelationship(props.type, props.id, item.type, item.content.id)}} />
+												<PolymorphicEditDialog type={item.type} id={item.content.id} />
 											</ListItemIcon>
 										</Grid>
 										<Grid item>
 											<ListItemIcon>
-												<PolymorphicEditDialog type={item.type} id={item.content.id} />
+												<Confirm onConfirm={() => {deleteRelationship(props.type, props.id, item.type, item.content.id)}} />
 											</ListItemIcon>
 										</Grid>
 									</Grid>
