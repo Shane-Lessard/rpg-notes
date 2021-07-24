@@ -13,9 +13,8 @@ import {
 } from '@material-ui/core'
 import './App.css'
 import 'react-quill/dist/quill.snow.css'
-import SelectedJournalProvider from './Contexts/SelectedJournalProvider'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import JournalListProvider from './Contexts/JournalListProvider'
+import State from './State'
 
 function App() {
 
@@ -37,24 +36,22 @@ function App() {
 		<div className="App">
 			<MuiThemeProvider theme={theme}>
 				<CssBaseline/>
-				<JournalListProvider>
-					<SelectedJournalProvider>
-						<BrowserRouter basename={process.env.PUBLIC_URL}>
-							<NavDrawer open={nav}
-									   onClose={() => {toggleNav(false)}}/>
-							<TopBar onMenuClick={() => {toggleNav(true)}}/>
-							<Container>
-								<Grid container spacing={3}>
-									<Grid item xs={12}>
-										<Paper>
-											<Routes/>
-										</Paper>
-									</Grid>
+				<State>
+					<BrowserRouter basename={process.env.PUBLIC_URL}>
+						<NavDrawer open={nav}
+								   onClose={() => {toggleNav(false)}}/>
+						<TopBar onMenuClick={() => {toggleNav(true)}}/>
+						<Container>
+							<Grid container spacing={3}>
+								<Grid item xs={12}>
+									<Paper>
+										<Routes/>
+									</Paper>
 								</Grid>
-							</Container>
-						</BrowserRouter>
-					</SelectedJournalProvider>
-				</JournalListProvider>
+							</Grid>
+						</Container>
+					</BrowserRouter>
+				</State>
 			</MuiThemeProvider>
 		</div>
 	)

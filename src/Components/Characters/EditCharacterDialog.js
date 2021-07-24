@@ -12,6 +12,7 @@ import {
 import CharacterService from '../../Services/CharacterService'
 import {Info, Save} from '@material-ui/icons'
 import Editor from '../Editor'
+import RelationshipList from '../Relationships/RelationshipList'
 
 const characterService = new CharacterService()
 
@@ -53,13 +54,6 @@ export default function EditCharacterDialog(props) {
 		})
 		props.onClose()
 	}
-
-	/*function cancelAndClose(){
-		setContent(character.notes)
-		setName(character.name)
-		setNpc(character.npc)
-		props.onClose()
-	}*/
 
 	return (
 		<div>
@@ -106,6 +100,14 @@ export default function EditCharacterDialog(props) {
 						</Grid>
 					</Grid>
 					<Editor value={content} onChange={setContent}/>
+					<Grid container>
+						<Grid item>
+							<RelationshipList
+								type='characters'
+								id={props.characterId}
+							/>
+						</Grid>
+					</Grid>
 				</DialogContent>
 			</Dialog>
 		</div>

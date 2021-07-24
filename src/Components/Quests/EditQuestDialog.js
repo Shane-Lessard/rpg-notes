@@ -12,6 +12,7 @@ import {
 import QuestService from '../../Services/QuestService'
 import {Info, Save} from '@material-ui/icons'
 import Editor from '../Editor'
+import RelationshipList from '../Relationships/RelationshipList'
 
 const questService = new QuestService()
 
@@ -106,6 +107,14 @@ export default function EditQuestDialog(props) {
 						</Grid>
 					</Grid>
 					<Editor value={content} onChange={setContent}/>
+					<Grid container>
+						<Grid item>
+							<RelationshipList
+								type='quests'
+								id={props.questId}
+							/>
+						</Grid>
+					</Grid>
 				</DialogContent>
 			</Dialog>
 		</div>

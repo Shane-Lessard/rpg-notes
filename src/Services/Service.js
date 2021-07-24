@@ -1,13 +1,14 @@
 import Dexie from 'dexie'
 
 const db = new Dexie('rpg-notes')
-db.version(1).stores({
+db.version(3).stores({
 	journals: '++id,&name',
 	characters: '++id,name,npc,journal_id',
 	places: '++id,name,journal_id',
 	quests: '++id,name,complete,journal_id',
 	items: '++id,name,journal_id',
 	events: '++id,name,journal_id',
+	relationships: '++id, table, tableId, join, joinId'
 })
 db.open().then(() => {
 	console.log('database opened')

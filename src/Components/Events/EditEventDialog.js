@@ -10,6 +10,7 @@ import {
 import EventService from '../../Services/EventService'
 import {Info, Save} from '@material-ui/icons'
 import Editor from '../Editor'
+import RelationshipList from '../Relationships/RelationshipList'
 
 const eventService = new EventService()
 
@@ -86,6 +87,14 @@ export default function EditEventDialog(props) {
 						</Grid>
 					</Grid>
 					<Editor value={content} onChange={setContent}/>
+					<Grid container>
+						<Grid item>
+							<RelationshipList
+								type='events'
+								id={props.eventId}
+							/>
+						</Grid>
+					</Grid>
 				</DialogContent>
 			</Dialog>
 		</div>

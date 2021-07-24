@@ -10,6 +10,7 @@ import {
 import ItemService from '../../Services/ItemService'
 import {Info, Save} from '@material-ui/icons'
 import Editor from '../Editor'
+import RelationshipList from '../Relationships/RelationshipList'
 
 const itemService = new ItemService()
 
@@ -86,6 +87,14 @@ export default function EditItemDialog(props) {
 						</Grid>
 					</Grid>
 					<Editor value={content} onChange={setContent}/>
+					<Grid container>
+						<Grid item>
+							<RelationshipList
+								type='items'
+								id={props.itemId}
+							/>
+						</Grid>
+					</Grid>
 				</DialogContent>
 			</Dialog>
 		</div>

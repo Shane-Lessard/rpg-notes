@@ -10,6 +10,7 @@ import {
 import PlaceService from '../../Services/PlaceService'
 import {Info, Save} from '@material-ui/icons'
 import Editor from '../Editor'
+import RelationshipList from '../Relationships/RelationshipList'
 
 const placeService = new PlaceService()
 
@@ -86,6 +87,14 @@ export default function EditPlaceDialog(props) {
 						</Grid>
 					</Grid>
 					<Editor value={content} onChange={setContent}/>
+					<Grid container>
+						<Grid item>
+							<RelationshipList
+								type='places'
+								id={props.placeId}
+							/>
+						</Grid>
+					</Grid>
 				</DialogContent>
 			</Dialog>
 		</div>
