@@ -1,25 +1,25 @@
 {
   "files": {
     "main.css": "/rpg-notes/static/css/main.2cbb0fc2.chunk.css",
-    "main.js": "/rpg-notes/static/js/main.581ab8d0.chunk.js",
-    "main.js.map": "/rpg-notes/static/js/main.581ab8d0.chunk.js.map",
+    "main.js": "/rpg-notes/static/js/main.ccd0fabd.chunk.js",
+    "main.js.map": "/rpg-notes/static/js/main.ccd0fabd.chunk.js.map",
     "runtime-main.js": "/rpg-notes/static/js/runtime-main.d97ccf8e.js",
     "runtime-main.js.map": "/rpg-notes/static/js/runtime-main.d97ccf8e.js.map",
     "static/css/2.a2032d84.chunk.css": "/rpg-notes/static/css/2.a2032d84.chunk.css",
-    "static/js/2.fdf4cf32.chunk.js": "/rpg-notes/static/js/2.fdf4cf32.chunk.js",
-    "static/js/2.fdf4cf32.chunk.js.map": "/rpg-notes/static/js/2.fdf4cf32.chunk.js.map",
+    "static/js/2.b5c021f4.chunk.js": "/rpg-notes/static/js/2.b5c021f4.chunk.js",
+    "static/js/2.b5c021f4.chunk.js.map": "/rpg-notes/static/js/2.b5c021f4.chunk.js.map",
     "static/js/3.ca5bbb37.chunk.js": "/rpg-notes/static/js/3.ca5bbb37.chunk.js",
     "static/js/3.ca5bbb37.chunk.js.map": "/rpg-notes/static/js/3.ca5bbb37.chunk.js.map",
     "index.html": "/rpg-notes/index.html",
     "static/css/2.a2032d84.chunk.css.map": "/rpg-notes/static/css/2.a2032d84.chunk.css.map",
     "static/css/main.2cbb0fc2.chunk.css.map": "/rpg-notes/static/css/main.2cbb0fc2.chunk.css.map",
-    "static/js/2.fdf4cf32.chunk.js.LICENSE.txt": "/rpg-notes/static/js/2.fdf4cf32.chunk.js.LICENSE.txt"
+    "static/js/2.b5c021f4.chunk.js.LICENSE.txt": "/rpg-notes/static/js/2.b5c021f4.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.d97ccf8e.js",
     "static/css/2.a2032d84.chunk.css",
-    "static/js/2.fdf4cf32.chunk.js",
+    "static/js/2.b5c021f4.chunk.js",
     "static/css/main.2cbb0fc2.chunk.css",
-    "static/js/main.581ab8d0.chunk.js"
+    "static/js/main.ccd0fabd.chunk.js"
   ]
 }
