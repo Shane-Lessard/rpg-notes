@@ -36,19 +36,19 @@ export default function AddRelationshipDialog(props){
 		setType(value)
 		switch (value){
 			case 'characters':
-				setOptions(await characterService.index(selectedJournal.id))
+				setOptions(await characterService.index(selectedJournal))
 				break
 			case 'events':
-				setOptions(await eventService.index(selectedJournal.id))
+				setOptions(await eventService.index(selectedJournal))
 				break
 			case 'items':
-				setOptions(await itemService.index(selectedJournal.id))
+				setOptions(await itemService.index(selectedJournal))
 				break
 			case 'places':
-				setOptions(await placeService.index(selectedJournal.id))
+				setOptions(await placeService.index(selectedJournal))
 				break
 			case 'quests':
-				setOptions(await questService.index(selectedJournal.id))
+				setOptions(await questService.index(selectedJournal))
 				break
 			default:
 				setOptions([])
