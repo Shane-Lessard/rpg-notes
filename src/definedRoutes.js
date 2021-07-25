@@ -14,7 +14,6 @@ import Places from './Views/Places'
 import Events from './Views/Events'
 import Journals from './Views/Journals'
 import Items from './Views/Items'
-import Instructions from './Views/Instructions'
 
 const routes = [
 	{
@@ -59,19 +58,11 @@ const routes = [
 		divided: true,
 	},
 	{
-		path: '/journals',
+		path: '/',
 		text: 'Manage Journals',
 		exact: true,
 		icon: <Notes/>,
 		component: <Journals/>,
-		inNav: true,
-	},
-	{
-		path: '/',
-		text: 'Instructions',
-		exact: true,
-		component: <Instructions/>,
-		icon: <Info/>,
 		inNav: true,
 	}
 ]
