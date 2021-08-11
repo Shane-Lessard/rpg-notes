@@ -1,7 +1,6 @@
 import React from 'react'
 import {
 	Explore,
-	Info,
 	Notes,
 	Person,
 	ShoppingCart,
@@ -58,7 +57,7 @@ const routes = [
 		divided: true,
 	},
 	{
-		path: '/',
+		path: '/journals',
 		text: 'Manage Journals',
 		exact: true,
 		icon: <Notes/>,
